@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import { watchedMoviesState } from '../atoms';
 import AddedMovie from "./AddedMovie";
 
-const MovieSelect = () => {
+const MovieSelectScreen = () => {
   const [movies, setMovies] = useRecoilState(watchedMoviesState);
 
   const [movieInput, setMovieInput] = useState('');
@@ -109,4 +109,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MovieSelect;
+export default MovieSelectScreen;

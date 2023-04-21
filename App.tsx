@@ -4,9 +4,14 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { RecoilRoot } from 'recoil';
 import AppHeader from './components/AppHeader';
-import MovieSelect from './components/MovieSelect';
-import NumberSelector from './components/NumberSelector';
+import MovieSelectScreen from './components/MovieSelectScreen';
+import NumberSelectScreen from './components/NumberSelectScreen';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './components/HomeScreen';
 
+const Stack = createStackNavigator();
 
 type Movie = {
   title: string;
@@ -33,24 +38,27 @@ export default function App() {
   }, []);
 
 
+  // return (
+  //   <RecoilRoot>
+  //     <SafeAreaProvider>
+  //       <AppHeader/>
+  //       <View style={styles.container}>
+  //         <StatusBar style='light' />
+  //         <MovieSelectScreen/>
+  //         <NumberSelectScreen/>
+  //       </View>
+  //     </SafeAreaProvider>
+  //   </RecoilRoot>
+  // );
   return (
     <RecoilRoot>
-      <SafeAreaProvider>
-        <AppHeader/>
-        <View style={styles.container}>
-          <StatusBar style='light' />
-          <MovieSelect/>
-          <NumberSelector/>
-        </View>
-      </SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="MovieSelect" component={MovieSelectScreen} />
+          <Stack.Screen name="NumberSelect" component={NumberSelectScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </RecoilRoot>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#222222',
-    alignItems: Platform.OS === 'web'? 'center' : 'stretch',
-  },
-});

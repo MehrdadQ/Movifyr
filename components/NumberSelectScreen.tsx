@@ -4,7 +4,7 @@ import { Platform, StyleSheet, Text, View } from 'react-native';
 import { useRecoilState } from 'recoil';
 import { recNumberState } from '../atoms';
 
-const NumberSelector = () => {
+const NumberSelectScreen = () => {
   const [recNumber, setRecNumber] = useRecoilState(recNumberState);
 
   return (
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NumberSelector;
+export default NumberSelectScreen;
