@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 interface MovieProps {
   title: string;
@@ -10,11 +9,9 @@ interface MovieProps {
 const AddedMovie: React.FC<MovieProps> = ({ title, onRemove }) => {
   return (
     <TouchableOpacity onPress={onRemove} style={styles.container}>
-      {/* <View > */}
         <Text style={styles.text}>
           {title}
         </Text>
-      {/* </View> */}
     </TouchableOpacity>
   );
 };
@@ -28,7 +25,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
-    // height: '100%',
   },
 
   text: {

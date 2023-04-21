@@ -1,22 +1,13 @@
-import React from 'react';
-import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 import Slider from '@react-native-community/slider';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import React from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 
 interface SliderProps {
   recNumber: number;
   setRecNumber: (value: number) => void;
 }
 
-
-
 const NumberSelector: React.FC<SliderProps> = ({ recNumber, setRecNumber }) => {
-
-  const onValueChange = (value: number) => {
-    setRecNumber(value);
-  };
-
-  
   return (
     <View style={styles.container}>
       <Text style={styles.text}>How many recommendations do you want?</Text>
@@ -43,11 +34,15 @@ const styles = StyleSheet.create({
   }, 
   container: {
     flex: 1,
+    padding: 15,
+    justifyContent: 'flex-start',
+    width: Platform.OS === "web" ? '70%' : '100%',
+    height: Platform.OS === "web" ? '50%' : '100%',
     overflow: 'hidden',
-    padding: 20,
   },
   slider: {
-    width: '100%',
+    // width: '100%',
+    maxHeight: 50,
   },
   thumb: {
     width: 20,

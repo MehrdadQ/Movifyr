@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native';
-import AddedMovie from "./AddedMovie";
+import React, { useRef, useState } from 'react';
+import { Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AddedMovie from "./AddedMovie";
 
 
 interface Props {
@@ -9,13 +9,9 @@ interface Props {
   setMovies: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const MovieList: React.FC<Props> = ({ movies, setMovies }) => {
+const MovieSelect: React.FC<Props> = ({ movies, setMovies }) => {
   const [movieInput, setMovieInput] = useState('');
   const inputRef = useRef<TextInput>(null);
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, [movies]);
 
   const handleAddMovie = () => {
     if (movieInput.trim() === '') return;
@@ -37,19 +33,20 @@ const MovieList: React.FC<Props> = ({ movies, setMovies }) => {
       </Text>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
-          placeholder="Enter movie name"
+          style={{...styles.input, backgroundColor: movies.length < 5 ? "#f3f3f3" : "#aaaaaa" }}
+          placeholder={movies.length < 5 ? "Enter movie name" : "maximum number of movies reached"}
           value={movieInput}
           onChangeText={setMovieInput}
           onKeyPress={handleKeyPress}
           ref={inputRef}
+          editable={movies.length < 5}
         />
-        <Icon 
+        {movies.length < 5 && <Icon 
           name="plus" 
           style={styles.addButton} 
           onPress={handleAddMovie} 
           size={20}
-        />
+        />}
       </View>
       <ScrollView style={styles.moviesContainer}>
         {movies.map((movie, index) => (
@@ -71,9 +68,9 @@ const MovieList: React.FC<Props> = ({ movies, setMovies }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 15,
     justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    width: Platform.OS === "web" ? '70%' : '100%',
   },
 
   text: {
@@ -96,7 +93,6 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    backgroundColor: '#f3f3f3',
     borderRadius: 5,
     padding: 5,
     flex: 1,
@@ -115,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MovieList;
+export default MovieSelect;

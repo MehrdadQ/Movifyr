@@ -1,21 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View, Image, Platform } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { Header, Icon } from 'react-native-elements';
+import { Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import AddMovie from './components/MovieList';
+import AppHeader from './components/AppHeader';
+import MovieSelect from './components/MovieSelect';
 import NumberSelector from './components/NumberSelector';
-
-
-// import { Platform } from 'react-native';
-// import LinearGradient from 'react-native-linear-gradient';
-// import WebLinearGradient from 'react-native-web-linear-gradient';
-
-import { LinearGradient } from 'expo-linear-gradient';
-
-// const MyGradient = Platform.OS === 'web' ? WebLinearGradient : LinearGradient;
-
-// const LinearGradientComponent = Platform.OS === 'web' ? LinearGradientWeb : LinearGradient;
 
 
 type Movie = {
@@ -49,32 +38,10 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <LinearGradient colors={['#353535', '#222222']}>
-        <Header
-          leftComponent={
-            <View >
-              <Image
-                source={require('./logo_name.png')}
-                style={styles.image}
-              />
-            </View>
-          }
-          rightComponent={
-            <View style={styles.questionMarkView}>
-              <Icon
-                name='question-circle'
-                type='font-awesome'
-                color='#fff'
-                onPress={() => {}}
-              />
-            </View>
-          }
-          containerStyle={styles.header}
-        />
-      </LinearGradient>
+      <AppHeader/>
       <View style={styles.container}>
         <StatusBar style='light' />
-        <AddMovie
+        <MovieSelect
           movies={watchedMovies}
           setMovies={setWatchedMovies}
         />
@@ -91,27 +58,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#222222',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  },
-
-  header: {
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderBottomWidth: 0,
-  },  
-
-  questionMarkView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginEnd: 20,
-  },
-
-  image: {
-    width: 130,
-    height: 40,
-    marginStart: 10,
+    alignItems: Platform.OS === 'web'? 'center' : 'stretch',
   },
 });
