@@ -1,13 +1,12 @@
 import Slider from '@react-native-community/slider';
 import React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
+import { useRecoilState } from 'recoil';
+import { recNumberState } from '../atoms';
 
-interface SliderProps {
-  recNumber: number;
-  setRecNumber: (value: number) => void;
-}
+const NumberSelector = () => {
+  const [recNumber, setRecNumber] = useRecoilState(recNumberState);
 
-const NumberSelector: React.FC<SliderProps> = ({ recNumber, setRecNumber }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>How many recommendations do you want?</Text>
@@ -41,7 +40,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   slider: {
-    // width: '100%',
     maxHeight: 50,
   },
   thumb: {
@@ -62,7 +60,5 @@ const styles = StyleSheet.create({
     color: '#f3f3f3',
   },
 });
-
-
 
 export default NumberSelector;

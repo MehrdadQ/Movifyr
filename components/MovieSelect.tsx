@@ -1,15 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useRecoilState } from 'recoil';
+import { watchedMoviesState } from '../atoms';
 import AddedMovie from "./AddedMovie";
 
+const MovieSelect = () => {
+  const [movies, setMovies] = useRecoilState(watchedMoviesState);
 
-interface Props {
-  movies: string[];
-  setMovies: React.Dispatch<React.SetStateAction<string[]>>;
-}
-
-const MovieSelect: React.FC<Props> = ({ movies, setMovies }) => {
   const [movieInput, setMovieInput] = useState('');
   const inputRef = useRef<TextInput>(null);
 
