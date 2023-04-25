@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Animated, TouchableOpacity, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import { Animated, Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import AppHeader from './AppHeader';
 
 interface Props {

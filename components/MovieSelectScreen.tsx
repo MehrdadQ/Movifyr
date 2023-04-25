@@ -1,11 +1,11 @@
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useRef, useState } from 'react';
-import { Animated, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useRecoilState } from 'recoil';
 import { watchedMoviesState } from '../atoms';
 import AddedMovie from "./AddedMovie";
 import AppHeader from './AppHeader';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 interface Props {
   navigation: StackNavigationProp<any>;
@@ -40,7 +40,7 @@ const MovieSelectScreen = ({ navigation }: Props) => {
         <View style={styles.inputContainer}>
           <TextInput
             style={{...styles.input, backgroundColor: movies.length < 5 ? "#f3f3f3" : "#aaaaaa" }}
-            placeholder={movies.length < 5 ? "Enter movie name" : "maximum number of movies reached"}
+            placeholder={movies.length < 5 ? "Enter movie name" : "max number of movies reached"}
             value={movieInput}
             onChangeText={setMovieInput}
             onKeyPress={handleKeyPress}
@@ -68,8 +68,8 @@ const MovieSelectScreen = ({ navigation }: Props) => {
           ))}
         </ScrollView>
         {movies.length > 0 && <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('NumberSelect')}
+          style={styles.button}
+          onPress={() => navigation.navigate('NumberSelect')}
         >
           <Text style={styles.buttonText}>
             Next
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginTop: 10,
     marginBottom: 10,
-    maxHeight: '70%',
+    maxHeight: '30%',
     width: Platform.OS === "web" ? '60%' : '100%',
   },
 

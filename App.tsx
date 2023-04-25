@@ -1,15 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { RecoilRoot } from 'recoil';
-import AppHeader from './components/AppHeader';
-import MovieSelectScreen from './components/MovieSelectScreen';
-import NumberSelectScreen from './components/NumberSelectScreen';
-import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import React, { useEffect } from 'react';
+import 'react-native-gesture-handler';
+import { RecoilRoot } from 'recoil';
 import HomeScreen from './components/HomeScreen';
+import MovieSelectScreen from './components/MovieSelectScreen';
+import NumberSelectScreen from './components/NumberSelectScreen';
 
 const Stack = createStackNavigator();
 
