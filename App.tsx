@@ -37,19 +37,6 @@ export default function App() {
   // }, [watchedMovies]);
   }, []);
 
-
-  // return (
-  //   <RecoilRoot>
-  //     <SafeAreaProvider>
-  //       <AppHeader/>
-  //       <View style={styles.container}>
-  //         <StatusBar style='light' />
-  //         <MovieSelectScreen/>
-  //         <NumberSelectScreen/>
-  //       </View>
-  //     </SafeAreaProvider>
-  //   </RecoilRoot>
-  // );
   return (
     <RecoilRoot>
       <NavigationContainer>

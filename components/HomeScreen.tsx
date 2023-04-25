@@ -16,25 +16,25 @@ const HomeScreen = ({ navigation }: Props) => {
 
   const animateText = () => {
     Animated.sequence([
-      Animated.delay(1000),
+      Animated.delay(1),
       Animated.timing(animation, {
         toValue: 1,
         duration: 500,
         useNativeDriver: true,
       }),
-      Animated.delay(2000),
+      Animated.delay(2),
       Animated.timing(animation, {
         toValue: 2,
         duration: 500,
         useNativeDriver: true,
       }),
-      Animated.delay(2000),
+      Animated.delay(2),
       Animated.timing(animation, {
         toValue: 3,
         duration: 500,
         useNativeDriver: true,
       }),
-      Animated.delay(2000),
+      Animated.delay(2),
       Animated.timing(animation, {
         toValue: 4,
         duration: 500,
