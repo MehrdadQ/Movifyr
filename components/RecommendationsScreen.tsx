@@ -1,15 +1,16 @@
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useEffect } from 'react';
-import { Platform, StyleSheet, View, Text, ScrollView } from 'react-native';
-import AppHeader from './AppHeader';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRecoilState } from "recoil";
 import { errorState, loadingState, recNumberState, recommendationsState, watchedMoviesState } from "../atoms";
+import AppHeader from './AppHeader';
 
 interface Props {
   navigation: StackNavigationProp<any>;
 }
 
 import { Dimensions } from "react-native";
+import Spinner from 'react-native-loading-spinner-overlay/lib';
 
 const { width } = Dimensions.get("window");
 
@@ -21,20 +22,28 @@ const RecommendationsScreen = ({ navigation }: Props) => {
   const [recNumber, setRecNumber] = useRecoilState(recNumberState);
   const [isLoading, setIsLoading] = useRecoilState(loadingState);
   const [errors, setErrors] = useRecoilState(errorState);
+  const [loadingMessage, setLoadingMessage] = useState('Loading...');
 
-
-
-  // const [movies, setMovies] = useRecoilState(watchedMoviesState);
-  // const [recommendations, setRecommendations] = useRecoilState(recommendationsState);
-  // const [recNumber, setRecNumber] = useRecoilState(recNumberState);
-  // const [isLoading, setIsLoading] = useRecoilState(loadingState);
-  // const [errors, setErrors] = useRecoilState(errorState);
-
-  // useEffect(() => {
-  //   setRecommendations(
-      
-  //   )
-  // ), []};
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      switch (loadingMessage) {
+        case 'Loading...':
+          setLoadingMessage('Almost there...');
+          break;
+        case 'Almost there...':
+          setLoadingMessage('Hang on...');
+          break;
+        case 'Hang on...':
+          setLoadingMessage('Just a moment...');
+          break;
+        default:
+          setLoadingMessage('Loading...');
+          break;
+      }
+    }, 4000);
+  
+    return () => clearInterval(intervalId);
+  }, [loadingMessage]);
 
   return (
     <>
@@ -45,7 +54,8 @@ const RecommendationsScreen = ({ navigation }: Props) => {
         :
           isLoading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Loading...</Text>
+              <Spinner visible={true} />
+              <Text style={styles.loadingText}>{loadingMessage}</Text>
             </View>
           ) : 
           <ScrollView
@@ -85,7 +95,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#ddd',
-    marginTop: 20,
+    marginTop: '20%',
+    textAlign: 'center',
   },
   movieContainer: {
     marginHorizontal: 10,
