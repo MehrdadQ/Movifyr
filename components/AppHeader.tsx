@@ -1,10 +1,28 @@
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Header, Icon } from 'react-native-elements';
-
+import { useResetRecoilState } from 'recoil';
+import { errorState, loadingState, recNumberState, recommendationsState, watchedMoviesState } from '../atoms';
 
 const AppHeader = () => {
+  const resetMovies = useResetRecoilState(watchedMoviesState);
+  const resetRecommendations = useResetRecoilState(recommendationsState);
+  const resetRecNumber = useResetRecoilState(recNumberState);
+  const resetIsLoading = useResetRecoilState(loadingState);
+  const resetErrors = useResetRecoilState(errorState);
+  const navigation = useNavigation();
+
+  const handleHomePress = () => {
+    resetMovies()
+    resetRecommendations()
+    resetRecNumber()
+    resetIsLoading()
+    resetErrors()
+    navigation.navigate('Home');
+  };
+
   return (
     <LinearGradient colors={['#353535', '#222222']}>
       <Header
@@ -19,10 +37,10 @@ const AppHeader = () => {
       rightComponent={
         <View style={styles.questionMarkView}>
         <Icon
-            name='question-circle'
+            name='home'
             type='font-awesome'
             color='#fff'
-            onPress={() => {}}
+            onPress={handleHomePress}
         />
         </View>
       }
