@@ -6,7 +6,7 @@ import React from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { errorState, loadingState, recNumberState, recommendationsState, watchedMoviesState } from '../atoms';
-import generatePrompt from '../prompts/PromptGenerator';
+import generatePrompt from '../tools/PromptGenerator';
 import AppHeader from './AppHeader';
 
 interface Props {
