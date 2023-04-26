@@ -15,13 +15,6 @@ if (Platform.OS !== 'web') {
 }
 const Stack = createStackNavigator();
 
-type Movie = {
-  title: string;
-  description: string;
-  rating: number;
-  year: number;
-};
-
 export default function App() {
   return (
     <RecoilRoot>

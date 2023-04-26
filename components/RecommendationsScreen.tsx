@@ -39,33 +39,35 @@ const RecommendationsScreen = ({ navigation }: Props) => {
   return (
     <>
       <AppHeader />
-      <ScrollView
-        horizontal
-        snapToInterval={movieWidth + 20} // 16 is the margin on both sides of each movie
-        decelerationRate="fast" // to make the scroll snap quickly
-        contentContainerStyle={styles.scrollContentContainer}
-      >
-        <View style={styles.container}>
-        {errors.length > 0 ? errors.map((error, index) => (
+      {errors.length > 0 ? errors.map((error, index) => (
           <Text key={index}>{error}</Text>
         ))
         :
           isLoading ? (
-            <Text style={styles.loadingText}>Loading...</Text>
-          ) :
-            recommendations.map((movie, index) => (
-              <View key={index} style={styles.movieContainer}>
-                <Text style={styles.title}>{movie.title} ({movie.year})</Text>
-                <Text style={styles.description}>{movie.description}</Text>
-                <View style={styles.yearRatingContainer}>
-                  {/* <Text style={styles.year}>{movie.year}</Text> */}
-                  <Text style={styles.rating}>IMDB rating: {movie.rating}</Text>
+            <View style={styles.loadingContainer}>
+              <Text style={styles.loadingText}>Loading...</Text>
+            </View>
+          ) : 
+          <ScrollView
+            horizontal
+            snapToInterval={movieWidth + 20} // 16 is the margin on both sides of each movie
+            decelerationRate="fast" // to make the scroll snap quickly
+            contentContainerStyle={styles.scrollContentContainer}
+          >
+            <View style={styles.container}>
+              {recommendations.map((movie, index) => (
+                <View key={index} style={styles.movieContainer}>
+                  <Text style={styles.title}>{movie.title} ({movie.year})</Text>
+                  <Text style={styles.description}>{movie.description}</Text>
+                  <View style={styles.yearRatingContainer}>
+                    {/* <Text style={styles.year}>{movie.year}</Text> */}
+                    <Text style={styles.rating}>IMDB rating: {movie.rating}</Text>
+                  </View>
                 </View>
-              </View>
-            ))
-          }
-        </View>
-      </ScrollView>
+              ))}
+            </View>
+          </ScrollView>
+      }
     </>
   )
 }
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
     height: "90%",
     borderWidth: 1,
     borderColor: "#ddd",
-    backgroundColor: "#223355",
+    backgroundColor: "#334499",
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: {
@@ -130,6 +132,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  loadingContainer: {
+    backgroundColor: '#222222',
+    height: "100%",
+    width: "100%",
+    padding: 20,
+  }
 });
 
 export default RecommendationsScreen;

@@ -4,12 +4,10 @@ import { REACT_APP_OPENAI_API_KEY } from 'dotenv';
 import { Configuration, OpenAIApi } from 'openai';
 import React from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { errorState, loadingState, recNumberState, recommendationsState, watchedMoviesState } from '../atoms';
 import generatePrompt from '../prompts/PromptGenerator';
 import AppHeader from './AppHeader';
-
-// import 'react-native-url-polyfill/auto';
 
 interface Props {
   navigation: StackNavigationProp<any>;
@@ -17,9 +15,9 @@ interface Props {
 
 const NumberSelectScreen = ({ navigation }: Props) => {
   const [recNumber, setRecNumber] = useRecoilState(recNumberState);
-  const [movies, setMovies] = useRecoilState(watchedMoviesState);
-  const [recommendations, setRecommendations] = useRecoilState(recommendationsState);
-  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  const [movies] = useRecoilState(watchedMoviesState);
+  const setRecommendations = useSetRecoilState(recommendationsState);
+  const setIsLoading = useSetRecoilState(loadingState);
   const [errors, setErrors] = useRecoilState(errorState);
 
   const updateRecommendations = (data: string) => {
