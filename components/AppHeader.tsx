@@ -29,7 +29,7 @@ const AppHeader = () => {
       leftComponent={
         <View >
         <Image
-            source={require('../logo_name.png')}
+            source={require('../assets/logo_name.png')}
             style={styles.image}
         />
         </View>
