@@ -7,11 +7,6 @@ type Movie = {
   year: number;
 };
 
-export const promptState = atom<string>({
-  key: 'prompt',
-  default: '',
-});
-
 export const watchedMoviesState = atom<string[]>({
   key: 'watchedMovies',
   default: [],
@@ -24,5 +19,15 @@ export const recNumberState = atom<number>({
 
 export const recommendationsState = atom<Movie[]>({
   key: 'recommendations',
+  default: [],
+});
+
+export const loadingState = atom<boolean>({
+  key: 'isLoading',
+  default: false,
+});
+
+export const errorState = atom<string[]>({
+  key: 'errors',
   default: [],
 });

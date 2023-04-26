@@ -1,16 +1,75 @@
 import Slider from '@react-native-community/slider';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { REACT_APP_OPENAI_API_KEY } from 'dotenv';
+import { Configuration, OpenAIApi } from 'openai';
 import React from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRecoilState } from 'recoil';
-import { recNumberState } from '../atoms';
+import { errorState, loadingState, recNumberState, recommendationsState, watchedMoviesState } from '../atoms';
+import generatePrompt from '../prompts/PromptGenerator';
 import AppHeader from './AppHeader';
+
+// import 'react-native-url-polyfill/auto';
+
 interface Props {
   navigation: StackNavigationProp<any>;
 }
 
 const NumberSelectScreen = ({ navigation }: Props) => {
   const [recNumber, setRecNumber] = useRecoilState(recNumberState);
+  const [movies, setMovies] = useRecoilState(watchedMoviesState);
+  const [recommendations, setRecommendations] = useRecoilState(recommendationsState);
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  const [errors, setErrors] = useRecoilState(errorState);
+
+  const updateRecommendations = (data: string) => {
+    const parsedData = JSON.parse(data);
+
+    const movies = parsedData.recommendations.map((rec: any) => ({
+      title: rec.title,
+      description: rec.description,
+      rating: rec.imdb_rating,
+      year: rec.year,
+    }));
+
+    setRecommendations(movies);
+  }
+
+  const fetchRecommendations = async () => {
+    const prompt = generatePrompt(movies, recNumber);
+  
+    const configuration = new Configuration({
+      apiKey: REACT_APP_OPENAI_API_KEY,
+    });
+  
+    const openai = new OpenAIApi(configuration);
+
+    setIsLoading(true);
+
+    openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [{ "role": "user", "content": prompt }],
+      temperature: 0.5,
+      max_tokens: 1024,
+    })
+      .then((result) => {
+        const res = result.data.choices[0].message?.content;
+        if (res) {
+          updateRecommendations(res);
+        }
+      })
+      .catch((e) => {
+        setErrors([...errors, `Something is going wrong, Please try again. ${e.message}`]);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  const handleSubmit = () => {
+    navigation.navigate('ShowRecommendations');
+    fetchRecommendations();
+  };
 
   return (
     <>
@@ -30,7 +89,7 @@ const NumberSelectScreen = ({ navigation }: Props) => {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('NumberSelect')}
+          onPress={() => handleSubmit()}
         >
           <Text style={styles.buttonText}>
             Give me {recNumber} recommendation{recNumber > 1 && 's'}!
